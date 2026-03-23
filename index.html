@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jensen Huang × Lex Fridman Podcast #494</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --nvidia-green: #76b900;
+  --nvidia-green-dim: #4a7a00;
+  --nvidia-green-glow: rgba(118, 185, 0, 0.15);
+  --nvidia-green-glow2: rgba(118, 185, 0, 0.08);
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-card: #161616;
+  --bg-card-hover: #1a1a1a;
+  --border: #222222;
+  --border-light: #2a2a2a;
+  --text-primary: #e8e8e8;
+  --text-secondary: #888888;
+  --text-dim: #555555;
+  --accent-blue: #00a6ff;
+  --accent-amber: #ffaa00;
+  --accent-red: #ff4444;
+  --accent-purple: #9966ff;
+  --cat-tech: #00c8ff;
+  --cat-biz: #76b900;
+  --cat-lead: #ffaa00;
+  --cat-phil: #cc66ff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Noto Sans SC', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--nvidia-green);
+  color: #000;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--nvidia-green-dim); }
+
+/* ==================== HERO ==================== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 60px 24px;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 30% 20%, rgba(118,185,0,0.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 80%, rgba(0,166,255,0.03) 0%, transparent 50%);
+  animation: heroBg 20s ease infinite alternate;
+}
+
+@keyframes heroBg {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(-3%, 3%) rotate(2deg); }
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(118,185,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(118,185,0,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 900px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  animation: fadeUp 0.8s ease both;
+}
+
+.hero-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--nvidia-green);
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.hero-ep {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: var(--nvidia-green);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  animation: fadeUp 0.8s ease 0.1s both;
+}
+
+.hero-title {
+  font-size: clamp(40px, 7vw, 80px);
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 8px;
+  animation: fadeUp 0.8s ease 0.2s both;
+}
+
+.hero-title .green {
+  color: var(--nvidia-green);
+  text-shadow: 0 0 60px rgba(118,185,0,0.3);
+}
+
+.hero-subtitle {
+  font-size: clamp(18px, 3vw, 28px);
+  font-weight: 300;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+  animation: fadeUp 0.8s ease 0.4s both;
+}
+
+.hero-stat {
+  text-align: center;
+}
+
+.hero-stat-value {
+  font-family: 'Space Mono', monospace;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--nvidia-green);
+}
+
+.hero-stat-label {
+  font-size: 12px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dim);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: fadeUp 0.8s ease 0.6s both;
+}
+
+.scroll-hint .arrow {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--nvidia-green), transparent);
+  animation: scrollArrow 2s ease infinite;
+}
+
+@keyframes scrollArrow {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ==================== NAV ==================== */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 52px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-inner::-webkit-scrollbar { display: none; }
+
+.nav-btn {
+  flex-shrink: 0;
+  padding: 6px 16px;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  background: none;
+  color: var(--text-secondary);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.nav-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-light);
+}
+
+.nav-btn.active {
+  color: #000;
+  background: var(--nvidia-green);
+  border-color: var(--nvidia-green);
+}
+
+/* ==================== SECTION ==================== */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 24px;
+}
+
+.section-header {
+  margin-bottom: 48px;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--nvidia-green);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* ==================== TIMELINE ==================== */
+.timeline-container {
+  position: relative;
+}
+
+.timeline-bar {
+  position: relative;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-bottom: 48px;
+  cursor: pointer;
+}
+
+.timeline-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--nvidia-green), var(--accent-blue));
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.3s;
+}
+
+.timeline-markers {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+
+.timeline-marker {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--border-light);
+  background: var(--bg-primary);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: all 0.3s;
+  z-index: 2;
+}
+
+.timeline-marker:hover,
+.timeline-marker.active {
+  border-color: var(--nvidia-green);
+  background: var(--nvidia-green);
+  box-shadow: 0 0 12px rgba(118,185,0,0.5);
+  transform: translate(-50%, -50%) scale(1.3);
+}
+
+.timeline-tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 8px 12px;
+  white-space: nowrap;
+  font-size: 12px;
+  color: var(--text-primary);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.timeline-marker:hover .timeline-tooltip {
+  opacity: 1;
+}
+
+/* ==================== TOPIC CARDS ==================== */
+.topics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+.topic-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.topic-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.topic-card[data-cat="tech"]::before { background: var(--cat-tech); }
+.topic-card[data-cat="biz"]::before { background: var(--cat-biz); }
+.topic-card[data-cat="lead"]::before { background: var(--cat-lead); }
+.topic-card[data-cat="phil"]::before { background: var(--cat-phil); }
+
+.topic-card:hover {
+  border-color: var(--border-light);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+}
+
+.topic-card:hover::before { opacity: 1; }
+
+.topic-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.topic-card-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.topic-card-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(118,185,0,0.1);
+  color: var(--nvidia-green);
+}
+
+.topic-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.topic-card-cat {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 10px;
+  border-radius: 100px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.topic-card-cat[data-cat="tech"] { background: rgba(0,200,255,0.1); color: var(--cat-tech); }
+.topic-card-cat[data-cat="biz"] { background: rgba(118,185,0,0.1); color: var(--cat-biz); }
+.topic-card-cat[data-cat="lead"] { background: rgba(255,170,0,0.1); color: var(--cat-lead); }
+.topic-card-cat[data-cat="phil"] { background: rgba(204,102,255,0.1); color: var(--cat-phil); }
+
+.topic-card-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.topic-card.expanded .topic-card-desc {
+  -webkit-line-clamp: unset;
+}
+
+.topic-card-insights {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: none;
+}
+
+.topic-card.expanded .topic-card-insights {
+  display: block;
+}
+
+.insight-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.insight-item::before {
+  content: '▸';
+  color: var(--nvidia-green);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.topic-card-expand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--nvidia-green);
+  cursor: pointer;
+  transition: gap 0.3s;
+}
+
+.topic-card:hover .topic-card-expand { gap: 10px; }
+
+/* ==================== INSIGHTS ==================== */
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.insight-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.insight-card:hover {
+  border-color: var(--nvidia-green-dim);
+  box-shadow: 0 0 40px rgba(118,185,0,0.05);
+}
+
+.insight-card .quote-mark {
+  font-family: 'Space Mono', monospace;
+  font-size: 48px;
+  color: var(--nvidia-green);
+  opacity: 0.3;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.insight-card .quote-text {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.8;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.insight-card .quote-topic {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ==================== INFRASTRUCTURE MAP ==================== */
+.infra-map-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.infra-map {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  min-height: 520px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg-secondary);
+}
+
+.infra-map-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(118,185,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(118,185,0,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.infra-map-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 45%, rgba(118,185,0,0.06) 0%, transparent 60%);
+}
+
+/* SVG layer for connections */
+.infra-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.infra-line {
+  stroke: var(--border-light);
+  stroke-width: 1.5;
+  fill: none;
+  opacity: 0.4;
+  transition: all 0.5s;
+}
+
+.infra-line.glow {
+  stroke: var(--nvidia-green);
+  opacity: 0.8;
+  filter: drop-shadow(0 0 4px rgba(118,185,0,0.4));
+}
+
+.infra-flow {
+  stroke: var(--nvidia-green);
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: 8 12;
+  stroke-dashoffset: 0;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.infra-flow.active {
+  opacity: 0.7;
+  animation: flowDash 1.5s linear infinite;
+}
+
+@keyframes flowDash {
+  to { stroke-dashoffset: -20; }
+}
+
+/* Nodes */
+.infra-node {
+  position: absolute;
+  z-index: 2;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate(-50%, -50%);
+}
+
+.infra-node:hover {
+  z-index: 10;
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.infra-node-inner {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  min-width: 140px;
+  text-align: center;
+  transition: all 0.4s;
+  position: relative;
+}
+
+.infra-node:hover .infra-node-inner {
+  border-color: var(--node-color, var(--nvidia-green));
+  box-shadow: 0 0 30px rgba(118,185,0,0.1), inset 0 0 20px rgba(118,185,0,0.03);
+}
+
+.infra-node.active .infra-node-inner {
+  border-color: var(--node-color, var(--nvidia-green));
+  box-shadow: 0 0 40px rgba(118,185,0,0.15), inset 0 0 30px rgba(118,185,0,0.04);
+  background: var(--bg-card-hover);
+}
+
+.infra-node-icon {
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.infra-node-name {
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--text-primary);
+}
+
+.infra-node-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-top: 6px;
+  display: inline-block;
+  background: rgba(118,185,0,0.1);
+  color: var(--nvidia-green);
+  letter-spacing: 0.5px;
+}
+
+/* The core node is special */
+.infra-node.core .infra-node-inner {
+  padding: 20px 24px;
+  min-width: 170px;
+  border-width: 2px;
+  border-color: var(--nvidia-green-dim);
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(118,185,0,0.04) 100%);
+}
+
+.infra-node.core .infra-node-icon {
+  font-size: 32px;
+}
+
+.infra-node.core .infra-node-name {
+  font-size: 15px;
+}
+
+.infra-node.core::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 20px;
+  border: 1px dashed rgba(118,185,0,0.15);
+  pointer-events: none;
+  animation: coreRing 8s linear infinite;
+}
+
+@keyframes coreRing {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Detail Panel */
+.infra-detail {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 280px;
+  background: rgba(16,16,16,0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 20px;
+  z-index: 20;
+  opacity: 0;
+  transform: translateX(12px);
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.infra-detail.show {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.infra-detail-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.infra-detail-name {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.infra-detail-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  background: rgba(118,185,0,0.1);
+  color: var(--nvidia-green);
+  margin-bottom: 12px;
+}
+
+.infra-detail-desc {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.infra-detail-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.infra-detail-spec {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.infra-detail-spec::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.infra-detail-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Title watermark */
+.infra-watermark {
+  position: absolute;
+  bottom: 16px;
+  left: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+.infra-hint {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+  .infra-map { aspect-ratio: auto; min-height: 700px; }
+  .infra-detail { position: relative; right: auto; top: auto; width: 100%; margin-top: 16px; opacity: 1; transform: none; pointer-events: auto; display: none; }
+  .infra-detail.show { display: block; }
+  .infra-node { transform: translate(-50%, -50%) scale(0.85); }
+  .infra-node:hover { transform: translate(-50%, -50%) scale(0.9); }
+}
+
+/* ==================== FOOTER ==================== */
+.footer {
+  text-align: center;
+  padding: 60px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border: 1px solid var(--nvidia-green);
+  border-radius: 100px;
+  color: var(--nvidia-green);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s;
+  margin-bottom: 24px;
+}
+
+.footer-link:hover {
+  background: var(--nvidia-green);
+  color: #000;
+}
+
+.footer-meta {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 16px;
+}
+
+/* ==================== MODAL ==================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal-overlay.show { display: flex; }
+
+.modal {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  max-width: 680px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 36px;
+  position: relative;
+  animation: modalIn 0.3s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  border-color: var(--nvidia-green);
+  color: var(--nvidia-green);
+}
+
+.modal-cat {
+  display: inline-block;
+  font-size: 11px;
+  padding: 3px 12px;
+  border-radius: 100px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.modal-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--nvidia-green);
+  margin-bottom: 20px;
+}
+
+.modal-body {
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.modal-insights-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.modal-insight {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.modal-insight::before {
+  content: '◆';
+  color: var(--nvidia-green);
+  flex-shrink: 0;
+  font-size: 8px;
+  margin-top: 5px;
+}
+
+.modal-yt-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  background: rgba(255,0,0,0.1);
+  border: 1px solid rgba(255,0,0,0.2);
+  border-radius: 100px;
+  color: #ff4444;
+  text-decoration: none;
+  font-size: 13px;
+  transition: all 0.3s;
+}
+
+.modal-yt-link:hover {
+  background: rgba(255,0,0,0.2);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .hero-stats { gap: 24px; }
+  .topics-grid { grid-template-columns: 1fr; }
+  .insights-grid { grid-template-columns: 1fr; }
+  .section { padding: 48px 16px; }
+  .hero { padding: 40px 16px; }
+  .modal { padding: 24px; }
+}
+
+/* ==================== FILTER CHIPS ==================== */
+.filter-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.filter-chip {
+  padding: 6px 16px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: none;
+  color: var(--text-secondary);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.filter-chip:hover { border-color: var(--text-dim); color: var(--text-primary); }
+.filter-chip.active { border-color: var(--nvidia-green); color: var(--nvidia-green); background: rgba(118,185,0,0.08); }
+
+.filter-chip[data-cat="tech"].active { border-color: var(--cat-tech); color: var(--cat-tech); background: rgba(0,200,255,0.08); }
+.filter-chip[data-cat="biz"].active { border-color: var(--cat-biz); color: var(--cat-biz); background: rgba(118,185,0,0.08); }
+.filter-chip[data-cat="lead"].active { border-color: var(--cat-lead); color: var(--cat-lead); background: rgba(255,170,0,0.08); }
+.filter-chip[data-cat="phil"].active { border-color: var(--cat-phil); color: var(--cat-phil); background: rgba(204,102,255,0.08); }
+
+/* hide/show topics */
+.topic-card.hidden-filter {
+  display: none;
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> Lex Fridman Podcast</div>
+    <div class="hero-ep">Episode #494</div>
+    <h1 class="hero-title"><span class="green">Jensen Huang</span><br>NVIDIA CEO</h1>
+    <p class="hero-subtitle">$4万亿公司与AI革命 · 深度对话全解析</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-value">2h 23m</div>
+        <div class="hero-stat-label">对话时长</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">20</div>
+        <div class="hero-stat-label">核心话题</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">4</div>
+        <div class="hero-stat-label">主题维度</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">$4T+</div>
+        <div class="hero-stat-label">NVIDIA 市值</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>向下探索</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- ==================== STICKY NAV ==================== -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="scrollToSection('overview')">概览</button>
+    <button class="nav-btn" onclick="scrollToSection('timeline')">时间线</button>
+    <button class="nav-btn" onclick="scrollToSection('topics')">话题详解</button>
+    <button class="nav-btn" onclick="scrollToSection('stack')">技术栈</button>
+    <button class="nav-btn" onclick="scrollToSection('insights')">核心洞察</button>
+  </div>
+</nav>
+
+<!-- ==================== OVERVIEW ==================== -->
+<section class="section" id="overview">
+  <div class="section-header">
+    <div class="section-label">// Overview</div>
+    <h2 class="section-title">播客概览</h2>
+  </div>
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:16px;">
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:24px;">
+      <div style="font-size:13px; color:var(--cat-tech); margin-bottom:8px; font-weight:700;">🔧 技术深潜</div>
+      <div style="font-size:14px; color:var(--text-secondary); line-height:1.7;">极端协同设计、机架级工程、AI Scaling Laws、内存瓶颈、电力挑战、供应链</div>
+    </div>
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:24px;">
+      <div style="font-size:13px; color:var(--cat-biz); margin-bottom:8px; font-weight:700;">📈 商业战略</div>
+      <div style="font-size:14px; color:var(--text-secondary); line-height:1.7;">NVIDIA护城河、$10万亿估值可能、中国市场、TSMC与台湾、太空数据中心</div>
+    </div>
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:24px;">
+      <div style="font-size:13px; color:var(--cat-lead); margin-bottom:8px; font-weight:700;">👑 领导力</div>
+      <div style="font-size:14px; color:var(--text-secondary); line-height:1.7;">如何管理NVIDIA、工程与领导哲学、压力下的领导力、Elon与Colossus</div>
+    </div>
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:24px;">
+      <div style="font-size:13px; color:var(--cat-phil); margin-bottom:8px; font-weight:700;">💭 哲学思考</div>
+      <div style="font-size:14px; color:var(--text-secondary); line-height:1.7;">AGI时间线、编程的未来、意识本质、死亡与人生、电子游戏</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TIMELINE ==================== -->
+<section class="section" id="timeline">
+  <div class="section-header">
+    <div class="section-label">// Timeline</div>
+    <h2 class="section-title">播客时间线</h2>
+  </div>
+  <div style="font-size:13px; color:var(--text-dim); margin-bottom:24px;">总时长 2小时23分钟 · 点击节点查看详情</div>
+  <div class="timeline-bar" id="timelineBar">
+    <div class="timeline-bar-fill" id="timelineFill"></div>
+    <div class="timeline-markers" id="timelineMarkers"></div>
+  </div>
+  <div id="timelineLegend" style="display:flex; gap:16px; flex-wrap:wrap; margin-top:8px;">
+    <span style="display:flex; align-items:center; gap:6px; font-size:11px; color:var(--text-dim);">
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--cat-tech);"></span> 技术
+    </span>
+    <span style="display:flex; align-items:center; gap:6px; font-size:11px; color:var(--text-dim);">
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--cat-biz);"></span> 商业
+    </span>
+    <span style="display:flex; align-items:center; gap:6px; font-size:11px; color:var(--text-dim);">
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--cat-lead);"></span> 领导力
+    </span>
+    <span style="display:flex; align-items:center; gap:6px; font-size:11px; color:var(--text-dim);">
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--cat-phil);"></span> 哲学
+    </span>
+  </div>
+</section>
+
+<!-- ==================== TOPICS ==================== -->
+<section class="section" id="topics">
+  <div class="section-header">
+    <div class="section-label">// Deep Dive</div>
+    <h2 class="section-title">20个核心话题详解</h2>
+  </div>
+  <div class="filter-row" id="filterRow">
+    <button class="filter-chip active" data-cat="all" onclick="filterTopics('all')">全部</button>
+    <button class="filter-chip" data-cat="tech" onclick="filterTopics('tech')">🔧 技术深潜</button>
+    <button class="filter-chip" data-cat="biz" onclick="filterTopics('biz')">📈 商业战略</button>
+    <button class="filter-chip" data-cat="lead" onclick="filterTopics('lead')">👑 领导力</button>
+    <button class="filter-chip" data-cat="phil" onclick="filterTopics('phil')">💭 哲学思考</button>
+  </div>
+  <div class="topics-grid" id="topicsGrid"></div>
+</section>
+
+<!-- ==================== TECH STACK ==================== -->
+<section class="section" id="stack">
+  <div class="section-header">
+    <div class="section-label">// AI Infrastructure Map</div>
+    <h2 class="section-title">Jensen谈AI基础设施版图</h2>
+  </div>
+  <p style="font-size:14px; color:var(--text-secondary); max-width:620px; margin:0 auto 36px; text-align:center; line-height:1.7;">
+    Jensen Huang在播客中详细解构了支撑AI革命的完整基础设施——点击每个节点探索详情
+  </p>
+  <div class="infra-map-wrapper">
+    <div class="infra-map" id="infraMap">
+      <div class="infra-map-bg"></div>
+      <!-- SVG connections drawn by JS -->
+      <svg class="infra-svg" id="infraSvg"></svg>
+      <!-- Nodes injected by JS -->
+      <div class="infra-watermark">NVIDIA AI Infrastructure · Lex Fridman Podcast #494</div>
+      <!-- Detail panel -->
+      <div class="infra-detail" id="infraDetail">
+        <button class="infra-detail-close" onclick="closeInfraDetail()">✕</button>
+        <div id="infraDetailContent"></div>
+      </div>
+    </div>
+    <div class="infra-hint">点击节点查看详情 · 连线表示数据与能量流向</div>
+  </div>
+</section>
+
+<!-- ==================== INSIGHTS ==================== -->
+<section class="section" id="insights">
+  <div class="section-header">
+    <div class="section-label">// Key Insights</div>
+    <h2 class="section-title">核心洞察精选</h2>
+  </div>
+  <div class="insights-grid" id="insightsGrid"></div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <a class="footer-link" href="https://www.youtube.com/watch?v=vif8NQcjVf0" target="_blank">
+    ▶ 观看完整播客
+  </a>
+  <div class="footer-meta">
+    Lex Fridman Podcast #494 · Jensen Huang: NVIDIA CEO<br>
+    The $4 Trillion Company & the AI Revolution<br>
+    <span style="color:var(--nvidia-green);">发布日期: 2026年3月24日</span>
+  </div>
+</footer>
+
+<!-- ==================== MODAL ==================== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+// ==================== DATA ====================
+const TOTAL_MINUTES = 143; // 2h23m
+
+const topics = [
+  {
+    id: 1, num: "01", cat: "tech", catLabel: "技术深潜",
+    title: "极端协同设计与机架级工程",
+    time: "00:06:34", minutes: 6.5,
+    desc: "Jensen阐述了为什么现代计算问题已经超越了单台计算机的处理能力，必须采用「极端协同设计」(Extreme Co-design)的方法。这意味着不再只是加速单个GPU，而是从芯片、内存、网络到软件栈进行全面协同优化，将整个机架作为一台计算机来设计。",
+    insights: [
+      "问题规模已经无法被单个GPU加速——需要将算法分解到多组件系统中",
+      "NVIDIA从设计单颗芯片转向设计整个机架级系统（如Vera Rubin平台）",
+      "极端协同设计需要理解从硬件到软件的完整堆栈",
+      "分布式计算引入了全新的复杂度——通信、同步、负载均衡"
+    ]
+  },
+  {
+    id: 2, num: "02", cat: "lead", catLabel: "领导力",
+    title: "Jensen如何管理NVIDIA",
+    time: "00:09:20", minutes: 9.3,
+    desc: "Lex深入探讨Jensen独特的管理风格。Jensen描述了他如何运营一家拥有数万员工的公司——他有多达60个直接汇报对象，几乎不进行一对一会议，而是要求所有系统组件同时向他汇报，以获得全局理解。这种扁平化管理让他能快速做出跨部门决策。",
+    insights: [
+      "约60个直接汇报人，几乎不做一对一会议——除非有人主动要求",
+      "同时接收所有系统组件的汇报，构建对公司的「全局视图」",
+      "组织结构极度扁平——信息不经过层级过滤直达CEO",
+      "Jensen认为理解每个细节是做出正确商业决策和克服瓶颈的关键"
+    ]
+  },
+  {
+    id: 3, num: "03", cat: "tech", catLabel: "技术深潜",
+    title: "AI Scaling Laws",
+    time: "00:28:41", minutes: 28.7,
+    desc: "Jensen详细讨论了AI扩展定律——随着计算规模的增加，模型性能是否持续提升。他认为扩展定律已经在13个数量级的计算中得到验证，没有理由认为它会停止。但挑战在于实际工程层面：更大的规模需要更多的内存、功率和全新的系统架构。",
+    insights: [
+      "AI扩展定律在13个数量级的计算规模上持续成立",
+      "摩尔定律已经放缓（Dennard缩放的减速），创新必须来自架构层面",
+      "预训练扩展仍在有效进行——关键问题是经济可行性而非物理限制",
+      "每一代平台都在将相同训练吞吐量所需的GPU数量减少到1/4"
+    ]
+  },
+  {
+    id: 4, num: "04", cat: "tech", catLabel: "技术深潜",
+    title: "AI扩展的最大障碍",
+    time: "00:43:41", minutes: 43.7,
+    desc: "Jensen分析了阻碍AI继续扩展的核心挑战。不是单一瓶颈，而是多重约束同时存在：芯片产能、内存带宽、电力供应、散热、供应链协调等，任何一个都无法简单地翻倍。",
+    insights: [
+      "不存在单一瓶颈——「你无法把任何东西简单翻倍，因为会撞上其他约束」",
+      "2026年的实际限制更偏向芯片产能而非电力供应",
+      "NVIDIA有超过200个供应链合作伙伴，需要长期规划",
+      "系统级创新比单纯堆算力更重要"
+    ]
+  },
+  {
+    id: 5, num: "05", cat: "biz", catLabel: "商业战略",
+    title: "供应链",
+    time: "00:45:25", minutes: 45.4,
+    desc: "供应链是AI时代最被低估的战略资产。Jensen讨论了NVIDIA如何提前数年规划产能，与TSMC、ASML等关键合作伙伴建立深度绑定，确保在需求爆发时有足够的芯片供应。",
+    insights: [
+      "供应链规划需要提前多年进行——不能等到需求出现时才行动",
+      "NVIDIA的供应链涉及数百家合作伙伴的复杂协调",
+      "TSMC和ASML是整个AI硬件栈中不可替代的关键节点",
+      "供应链本身就是一种竞争壁垒——建立关系需要时间和信任"
+    ]
+  },
+  {
+    id: 6, num: "06", cat: "tech", catLabel: "技术深潜",
+    title: "内存挑战",
+    time: "00:47:20", minutes: 47.3,
+    desc: "内存是AI系统中最关键的瓶颈之一。Jensen深入解释了为什么AI模型需要海量内存——大型语言模型的参数和KV缓存需要存储在高速内存中，而HBM（高带宽内存）的产能和带宽仍是重大限制因素。",
+    insights: [
+      "内存带宽和容量是AI推理的核心瓶颈",
+      "NVIDIA通过收购Groq技术来补充推理芯片，扩展内存容量",
+      "Groq LPX机架可将Rubin GPU的每瓦Token性能提升35倍",
+      "未来的架构（如Kyber）将通过垂直计算托盘进一步优化内存延迟"
+    ]
+  },
+  {
+    id: 7, num: "07", cat: "tech", catLabel: "技术深潜",
+    title: "电力挑战",
+    time: "00:53:25", minutes: 53.4,
+    desc: "AI数据中心的能耗问题是行业面临的巨大挑战。Jensen讨论了从100兆瓦到千兆瓦级AI工厂的设计蓝图，以及电力如何成为AI基础设施部署的核心约束。",
+    insights: [
+      "AI工厂从100兆瓦级别扩展到数千兆瓦级别",
+      "NVIDIA推出Omniverse DSX来覆盖AI工厂的设计和运营",
+      "美国在电力供应方面做得比预期好，但仍是关键约束",
+      "更高效的系统（如Rubin）可以用1/4的GPU达到同样的训练吞吐量"
+    ]
+  },
+  {
+    id: 8, num: "08", cat: "lead", catLabel: "领导力",
+    title: "Elon Musk与Colossus",
+    time: "00:58:45", minutes: 58.7,
+    desc: "Jensen讨论了Elon Musk的xAI项目Colossus——号称世界上最大的AI训练集群。Jensen分析了Musk的执行力和愿景，以及大规模AI集群建设中的工程挑战和突破。",
+    insights: [
+      "Colossus展示了极端规模AI基础设施的可能性",
+      "Musk和Jensen都体现了「永不停歇的交付」精神",
+      "大规模集群建设需要同时解决供应链、电力、冷却等多维问题",
+      "竞争驱动创新——大型客户的需求推动NVIDIA不断突破"
+    ]
+  },
+  {
+    id: 9, num: "09", cat: "lead", catLabel: "领导力",
+    title: "Jensen的工程与领导哲学",
+    time: "01:02:13", minutes: 62.2,
+    desc: "Jensen分享了他对工程和领导力的核心信念。他强调了「永远交付下一代」的执念——不是靠一次突破取胜，而是通过持续的、不间断的迭代保持领先。",
+    insights: [
+      "成功的创始人共同的特质：永不停歇的执行力(relentless)",
+      "对用户的痴迷是驱动力——不是对技术的痴迷",
+      "理解每个细节才能做出最好的决策",
+      "NVIDIA的年度性能提升：5倍性能、10倍吞吐量、15倍Token需求"
+    ]
+  },
+  {
+    id: 10, num: "10", cat: "biz", catLabel: "商业战略",
+    title: "中国市场",
+    time: "01:07:38", minutes: 67.6,
+    desc: "Jensen讨论了中美科技竞争背景下NVIDIA面临的地缘政治挑战。他分析了出口管制对业务的影响、中国AI发展的现状，以及如何在合规前提下维持全球业务。",
+    insights: [
+      "中国在开源AI模型方面做出了显著贡献（如DeepSeek）",
+      "地缘政治约束影响了NVIDIA在中国的产品供应策略",
+      "Jensen对「末日论者」影响华盛顿政策表达了不满",
+      "AI竞争的关键在于预算、计算资源和商业模式，而非技术封锁"
+    ]
+  },
+  {
+    id: 11, num: "11", cat: "biz", catLabel: "商业战略",
+    title: "TSMC与台湾",
+    time: "01:15:51", minutes: 75.8,
+    desc: "TSMC是全球芯片制造的命脉。Jensen探讨了NVIDIA与TSMC的深度合作关系、台湾在全球半导体供应链中不可替代的地位，以及这对AI产业的战略意义。",
+    insights: [
+      "TSMC是整个AI硬件栈中最不可替代的合作伙伴",
+      "NVIDIA在将fp32引入着色器方面做出了开创性决策，为GPU可编程性奠基",
+      "在GeForce上实现CUDA是一个极具风险但最终成功的战略赌注",
+      "芯片制造的地理集中度是全球供应链的关键脆弱点"
+    ]
+  },
+  {
+    id: 12, num: "12", cat: "biz", catLabel: "商业战略",
+    title: "NVIDIA的护城河",
+    time: "01:21:06", minutes: 81.1,
+    desc: "NVIDIA凭什么不可替代？Jensen系统性地解释了公司的竞争壁垒——不只是硬件，更是20年积累的CUDA生态、全栈集成能力、以及与每一家云公司和AI实验室的深度绑定。",
+    insights: [
+      "CUDA已有20年历史——「每朵云和每台计算机」都有NVIDIA的存在",
+      "软件生态系统是围绕芯片的最强护城河，而非芯片本身",
+      "NVIDIA同步推进GPU、CPU、DPU、网络等六大芯片组件的协同设计",
+      "竞争者（Intel、AMD、Broadcom）必须同时追赶硬件和软件两条线"
+    ]
+  },
+  {
+    id: 13, num: "13", cat: "biz", catLabel: "商业战略",
+    title: "太空AI数据中心",
+    time: "01:26:43", minutes: 86.7,
+    desc: "一个令人惊叹的前瞻性话题——当地球上的电力和空间不够时，AI计算是否可以搬到太空？Jensen探讨了太空数据中心的可行性和潜在优势。",
+    insights: [
+      "太空数据中心可以利用太阳能，不受地球电力基础设施限制",
+      "GTC 2026已经展示了太空计算的概念原型",
+      "冷却在太空中反而是新挑战——没有空气对流",
+      "这可能是AI基础设施的长期终极方案之一"
+    ]
+  },
+  {
+    id: 14, num: "14", cat: "biz", catLabel: "商业战略",
+    title: "NVIDIA能否达到$10万亿？",
+    time: "01:30:31", minutes: 90.5,
+    desc: "Lex提出大胆问题：NVIDIA能否成为$10万亿公司？Jensen分析了支撑这一估值的逻辑——AI从软件品类转变为公用事业级基础设施项目，NVIDIA嵌入在每一层。",
+    insights: [
+      "Jensen预计2025-2027年Blackwell和Vera Rubin的订单总额达$1万亿",
+      "AI正在从「软件品类」转变为「公用事业级基础设施」",
+      "NVIDIA要在芯片、存储、网络、编排层、数字孪生、Agent运行时等每一层都占据位置",
+      "市场规模决定研发能力——更大的市场支撑更大的创新投入"
+    ]
+  },
+  {
+    id: 15, num: "15", cat: "lead", catLabel: "领导力",
+    title: "压力下的领导力",
+    time: "01:40:40", minutes: 100.6,
+    desc: "当一家公司的市值从数十亿飙升到数万亿，领导者如何保持冷静和判断力？Jensen分享了他应对极端压力的方法论——保持对产品的专注、对团队的信任、以及对长期愿景的坚定。",
+    insights: [
+      "极端增长带来的压力不亚于衰退——两者都需要清醒的领导力",
+      "Jensen保持专注的方式：深入技术细节而非沉迷管理层会议",
+      "对「下一代永远在路上」的信念让团队始终向前看",
+      "NVIDIA从游戏GPU到AI的战略转型体现了对市场需求的敏锐适应"
+    ]
+  },
+  {
+    id: 16, num: "16", cat: "phil", catLabel: "哲学思考",
+    title: "电子游戏",
+    time: "01:54:26", minutes: 114.4,
+    desc: "Jensen从游戏起家，对电子游戏有着深厚的感情。他讨论了游戏作为GPU和图形技术的摇篮、DLSS技术的演进，以及游戏与AI之间日益加深的关系。",
+    insights: [
+      "游戏市场的规模为NVIDIA早期研发提供了关键资金支持",
+      "GPU的可编程性从游戏需求演化而来，最终催生了通用GPU计算",
+      "DLSS 5展示了AI赋能实时图形的前沿",
+      "游戏中的虚拟世界为物理AI（自动驾驶、机器人）提供了训练场"
+    ]
+  },
+  {
+    id: 17, num: "17", cat: "phil", catLabel: "哲学思考",
+    title: "AGI时间线",
+    time: "02:01:18", minutes: 121.3,
+    desc: "所有人最关心的问题：通用人工智能(AGI)什么时候到来？Jensen分享了他的观点——AI正在从「模型时代」过渡到「系统时代」，AGI的实现可能比许多人想象的更近，但也需要全新的系统方法论。",
+    insights: [
+      "AI正在从「模型时代」进入「系统时代」——单靠更大的模型不够",
+      "深度垂直领域的专业化将成为关键护城河",
+      "Physical AI（自动驾驶、机器人、医疗）正在将AI扩展到物理世界",
+      "行业知识而非通用模型本身将成为长期竞争优势"
+    ]
+  },
+  {
+    id: 18, num: "18", cat: "phil", catLabel: "哲学思考",
+    title: "编程的未来",
+    time: "02:03:31", minutes: 123.5,
+    desc: "AI将如何改变编程？Jensen认为自然语言正在成为新的编程语言，但这不意味着程序员会消失——他们会进化。计算的本质正在改变：从精确指令到概率性推理。",
+    insights: [
+      "自然语言正在成为新的编程接口——但理解底层逻辑仍然重要",
+      "AI辅助编程（如Claude Code、Cursor）正在重塑开发工作流",
+      "程序员的角色从写代码转向设计系统和审查AI输出",
+      "编程不会消失——但「编程」的定义正在根本性改变"
+    ]
+  },
+  {
+    id: 19, num: "19", cat: "phil", catLabel: "哲学思考",
+    title: "意识的本质",
+    time: "02:17:02", minutes: 137,
+    desc: "对话进入最深层的哲学领域——意识是什么？AI能否拥有意识？Jensen以工程师和哲学家的双重视角探讨了这个人类最古老的问题。",
+    insights: [
+      "意识仍是人类理解中最大的谜题——我们甚至缺乏好的定义",
+      "AI系统可能展现出类似意识的行为，但这是否等同于「拥有意识」？",
+      "主观体验（感质/Qualia）是当前科学无法解释的核心难题",
+      "理解意识可能需要全新的科学框架——而AI可能帮助我们找到它"
+    ]
+  },
+  {
+    id: 20, num: "20", cat: "phil", catLabel: "哲学思考",
+    title: "死亡与人生",
+    time: "02:23:23", minutes: 143.4,
+    desc: "播客以最深沉的话题收尾——关于死亡和有限的人生。Jensen罕见地展露了个人的脆弱面，讨论了面对终有一死的现实时，如何找到工作和人生的意义。这不仅是CEO的独白，更是一个人对存在本质的真诚思考。",
+    insights: [
+      "对死亡的意识反而驱动了更强烈的创造冲动",
+      "人生的意义不在于公司市值——而在于你留给世界的影响",
+      "Jensen将NVIDIA视为他对世界做出贡献的载体",
+      "有限的时间是最宝贵的资源——这一点CEO和普通人没有区别"
+    ]
+  }
+];
+
+const infraNodes = [
+  {
+    id: "gpu", icon: "⚡", name: "GPU 计算核心",
+    tag: "5x/年", color: "#76b900", core: true,
+    x: 50, y: 42,
+    desc: "NVIDIA GPU 是整个AI基础设施的核心引擎。从 Blackwell 到 Vera Rubin 再到 Kyber，每一代实现约5倍性能飞跃。",
+    specs: ["Blackwell → Vera Rubin → Kyber 路线图", "同等训练吞吐量仅需1/4 GPU数量", "年度性能提升5x · 吞吐量10x", "Kyber: 144颗GPU垂直计算托盘架构"]
+  },
+  {
+    id: "cuda", icon: "💻", name: "CUDA 软件生态",
+    tag: "20年积累", color: "#76b900",
+    x: 22, y: 22,
+    desc: "CUDA 已有20年历史，是NVIDIA最深的护城河。它存在于「每朵云和每台计算机」中，构建了无可替代的开发者生态。",
+    specs: ["全球最大的GPU软件开发平台", "20年生态 · 百万开发者", "覆盖所有主流云平台和AI框架", "软件生态 > 硬件本身的壁垒"]
+  },
+  {
+    id: "model", icon: "🧠", name: "AI 模型层",
+    tag: "AGI", color: "#cc66ff",
+    x: 50, y: 10,
+    desc: "从大型语言模型到推理模型再到 Physical AI，模型层正从「模型时代」过渡到「系统时代」，深度垂直专业化将成为关键。",
+    specs: ["LLM · 推理模型 · Physical AI", "从模型时代进入系统时代", "行业知识成为核心护城河", "Token需求以15x速率增长"]
+  },
+  {
+    id: "memory", icon: "🧮", name: "内存",
+    tag: "核心瓶颈", color: "#ff4444",
+    x: 78, y: 22,
+    desc: "内存带宽和容量是AI推理的核心瓶颈。NVIDIA通过收购Groq技术，以LPX推理芯片扩展内存容量，实现35倍效率提升。",
+    specs: ["HBM高带宽内存 — 产能受限", "Groq LPX: 每瓦Token性能 35x", "256颗LPU的独立推理机架", "内存延迟是推理速度的关键限制"]
+  },
+  {
+    id: "network", icon: "🔗", name: "网络互联",
+    tag: "机架级", color: "#00a6ff",
+    x: 78, y: 62,
+    desc: "从NVLink到InfiniBand再到Spectrum-X，NVIDIA构建了全球最大的AI网络基础设施。机架级设计需要极低延迟的芯片间通信。",
+    specs: ["NVLink · InfiniBand · Spectrum-X", "ConnectX NIC · BlueField DPU", "NVIDIA是最大的网络设备公司之一", "Mellanox收购奠定了网络护城河"]
+  },
+  {
+    id: "fab", icon: "🏭", name: "芯片制造",
+    tag: "TSMC", color: "#ffaa00",
+    x: 22, y: 62,
+    desc: "TSMC是NVIDIA最不可替代的合作伙伴。全球半导体制造高度集中于台湾，是供应链中最大的地缘政治风险点。",
+    specs: ["TSMC — 全球唯一先进制程供应商", "ASML — 光刻机技术垄断", "200+ 供应链合作伙伴", "芯片产能是2026年的首要限制因素"]
+  },
+  {
+    id: "power", icon: "🔌", name: "电力基础设施",
+    tag: "GW级", color: "#ff6644",
+    x: 35, y: 82,
+    desc: "AI工厂正从100MW级扩展到GW级。电力是AI基础设施部署的核心物理约束，NVIDIA推出Omniverse DSX覆盖完整设计运营。",
+    specs: ["100MW → 数千MW级 AI工厂", "Omniverse DSX: AI工厂设计平台", "美国电力供应优于预期但仍吃紧", "能效: Rubin用1/4 GPU达同等吞吐量"]
+  },
+  {
+    id: "deploy", icon: "🌍", name: "物理部署",
+    tag: "地面 → 太空", color: "#cc66ff",
+    x: 65, y: 82,
+    desc: "当地球的电力和空间不够时，AI计算可能搬到太空。太空数据中心利用太阳能，不受地面电力基础设施限制。这是AI基础设施的终极形态。",
+    specs: ["地面超大规模数据中心", "太空数据中心 — GTC 2026概念展示", "太阳能供电 · 无地面电网限制", "散热成为太空环境的新挑战"]
+  }
+];
+
+// Connections between nodes: [fromId, toId]
+const infraConnections = [
+  ["model", "cuda"],
+  ["model", "gpu"],
+  ["model", "memory"],
+  ["cuda", "gpu"],
+  ["gpu", "memory"],
+  ["gpu", "network"],
+  ["gpu", "fab"],
+  ["network", "deploy"],
+  ["fab", "gpu"],
+  ["power", "deploy"],
+  ["power", "fab"],
+  ["deploy", "gpu"]
+];
+
+const keyInsights = [
+  { text: "极端协同设计之所以必要，是因为问题已经无法装进一台计算机、被一颗GPU加速。", topic: "极端协同设计" },
+  { text: "CUDA已经20年了——它存在于每朵云、每台计算机中。软件生态才是最深的护城河。", topic: "NVIDIA护城河" },
+  { text: "你无法把任何东西简单翻倍——因为你会撞上其他约束。所有东西都几乎处于极限。", topic: "AI扩展障碍" },
+  { text: "AI正在从「模型时代」过渡到「系统时代」。谁更懂行业，谁就有更强的护城河。", topic: "AGI时间线" },
+  { text: "每一代成功的创始人都有一个共同特质——永不停歇。对用户的痴迷是终极驱动力。", topic: "领导力哲学" },
+  { text: "NVIDIA每年的性能提升：5倍性能、10倍吞吐量。Token需求则以15倍速增长。", topic: "AI扩展定律" },
+  { text: "从Blackwell到Vera Rubin，同样的训练吞吐量只需要1/4的GPU。经济学在根本改变。", topic: "技术演进" },
+  { text: "有限的时间是最宝贵的资源——在这一点上，CEO和每个普通人没有任何区别。", topic: "死亡与人生" },
+  { text: "自然语言正在成为新的编程接口。编程不会消失，但「编程」的定义正在被彻底重写。", topic: "编程的未来" }
+];
+
+// ==================== RENDER ====================
+function renderTimeline() {
+  const container = document.getElementById('timelineMarkers');
+  topics.forEach(t => {
+    const pct = (t.minutes / TOTAL_MINUTES) * 100;
+    const catColors = { tech: 'var(--cat-tech)', biz: 'var(--cat-biz)', lead: 'var(--cat-lead)', phil: 'var(--cat-phil)' };
+    const marker = document.createElement('div');
+    marker.className = 'timeline-marker';
+    marker.style.left = pct + '%';
+    marker.style.borderColor = catColors[t.cat];
+    marker.onclick = () => openModal(t);
+    marker.innerHTML = `<div class="timeline-tooltip">${t.time} — ${t.title}</div>`;
+    container.appendChild(marker);
+  });
+}
+
+function renderTopics() {
+  const grid = document.getElementById('topicsGrid');
+  grid.innerHTML = topics.map(t => `
+    <div class="topic-card" data-cat="${t.cat}" data-id="${t.id}" onclick="openModal(topics.find(x=>x.id===${t.id}))">
+      <div class="topic-card-head">
+        <span class="topic-card-num">#${t.num}</span>
+        <span class="topic-card-time">${t.time}</span>
+      </div>
+      <span class="topic-card-cat" data-cat="${t.cat}">${t.catLabel}</span>
+      <div class="topic-card-title">${t.title}</div>
+      <div class="topic-card-desc">${t.desc}</div>
+      <div class="topic-card-expand">展开详情 →</div>
+    </div>
+  `).join('');
+}
+
+// ==================== INFRASTRUCTURE MAP ====================
+let activeInfraNode = null;
+
+function renderInfraMap() {
+  const map = document.getElementById('infraMap');
+  const svg = document.getElementById('infraSvg');
+
+  // Create nodes
+  infraNodes.forEach(n => {
+    const node = document.createElement('div');
+    node.className = `infra-node${n.core ? ' core' : ''}`;
+    node.id = `infra-node-${n.id}`;
+    node.style.left = n.x + '%';
+    node.style.top = n.y + '%';
+    node.style.setProperty('--node-color', n.color);
+    node.onclick = (e) => { e.stopPropagation(); selectInfraNode(n); };
+    node.innerHTML = `
+      <div class="infra-node-inner">
+        <div class="infra-node-icon">${n.icon}</div>
+        <div class="infra-node-name">${n.name}</div>
+        <div class="infra-node-tag" style="background:${n.color}18; color:${n.color}">${n.tag}</div>
+      </div>
+    `;
+    map.appendChild(node);
+  });
+
+  // Draw connections (wait a tick for layout)
+  requestAnimationFrame(() => drawInfraConnections());
+
+  // Click map background to deselect
+  map.addEventListener('click', () => closeInfraDetail());
+}
+
+function drawInfraConnections() {
+  const svg = document.getElementById('infraSvg');
+  const map = document.getElementById('infraMap');
+  const mapRect = map.getBoundingClientRect();
+  svg.innerHTML = '';
+
+  infraConnections.forEach(([fromId, toId], i) => {
+    const fromEl = document.getElementById(`infra-node-${fromId}`);
+    const toEl = document.getElementById(`infra-node-${toId}`);
+    if (!fromEl || !toEl) return;
+
+    const fromRect = fromEl.getBoundingClientRect();
+    const toRect = toEl.getBoundingClientRect();
+
+    const x1 = fromRect.left + fromRect.width / 2 - mapRect.left;
+    const y1 = fromRect.top + fromRect.height / 2 - mapRect.top;
+    const x2 = toRect.left + toRect.width / 2 - mapRect.left;
+    const y2 = toRect.top + toRect.height / 2 - mapRect.top;
+
+    // Curved line
+    const mx = (x1 + x2) / 2;
+    const my = (y1 + y2) / 2;
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const cx = mx - dy * 0.1;
+    const cy = my + dx * 0.1;
+    const d = `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`;
+
+    // Static line
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    line.setAttribute('d', d);
+    line.setAttribute('class', 'infra-line');
+    line.setAttribute('data-from', fromId);
+    line.setAttribute('data-to', toId);
+    svg.appendChild(line);
+
+    // Animated flow line
+    const flow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    flow.setAttribute('d', d);
+    flow.setAttribute('class', 'infra-flow');
+    flow.setAttribute('data-from', fromId);
+    flow.setAttribute('data-to', toId);
+    svg.appendChild(flow);
+  });
+}
+
+function selectInfraNode(n) {
+  // Deselect previous
+  document.querySelectorAll('.infra-node').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.infra-line').forEach(el => el.classList.remove('glow'));
+  document.querySelectorAll('.infra-flow').forEach(el => el.classList.remove('active'));
+
+  // Activate node
+  const nodeEl = document.getElementById(`infra-node-${n.id}`);
+  if (nodeEl) nodeEl.classList.add('active');
+  activeInfraNode = n.id;
+
+  // Highlight connected lines
+  document.querySelectorAll('.infra-line').forEach(el => {
+    if (el.getAttribute('data-from') === n.id || el.getAttribute('data-to') === n.id) {
+      el.classList.add('glow');
+    }
+  });
+  document.querySelectorAll('.infra-flow').forEach(el => {
+    if (el.getAttribute('data-from') === n.id || el.getAttribute('data-to') === n.id) {
+      el.classList.add('active');
+    }
+  });
+
+  // Show detail panel
+  const detail = document.getElementById('infraDetail');
+  document.getElementById('infraDetailContent').innerHTML = `
+    <div class="infra-detail-icon">${n.icon}</div>
+    <div class="infra-detail-name">${n.name}</div>
+    <div class="infra-detail-tag" style="background:${n.color}18; color:${n.color}">${n.tag}</div>
+    <div class="infra-detail-desc">${n.desc}</div>
+    <div class="infra-detail-specs">
+      ${n.specs.map(s => `<div class="infra-detail-spec" style="--dot-color:${n.color}"><span style="color:${n.color}; font-size:10px;">◆</span> ${s}</div>`).join('')}
+    </div>
+  `;
+  detail.classList.add('show');
+}
+
+function closeInfraDetail() {
+  document.querySelectorAll('.infra-node').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.infra-line').forEach(el => el.classList.remove('glow'));
+  document.querySelectorAll('.infra-flow').forEach(el => el.classList.remove('active'));
+  document.getElementById('infraDetail').classList.remove('show');
+  activeInfraNode = null;
+}
+
+// Redraw connections on resize
+window.addEventListener('resize', () => {
+  drawInfraConnections();
+  // Re-highlight if active
+  if (activeInfraNode) {
+    const n = infraNodes.find(x => x.id === activeInfraNode);
+    if (n) {
+      document.querySelectorAll('.infra-line').forEach(el => {
+        el.classList.toggle('glow', el.getAttribute('data-from') === n.id || el.getAttribute('data-to') === n.id);
+      });
+      document.querySelectorAll('.infra-flow').forEach(el => {
+        el.classList.toggle('active', el.getAttribute('data-from') === n.id || el.getAttribute('data-to') === n.id);
+      });
+    }
+  }
+});
+
+function renderInsights() {
+  const grid = document.getElementById('insightsGrid');
+  grid.innerHTML = keyInsights.map(ins => `
+    <div class="insight-card">
+      <div class="quote-mark">"</div>
+      <div class="quote-text">${ins.text}</div>
+      <div class="quote-topic">// ${ins.topic}</div>
+    </div>
+  `).join('');
+}
+
+// ==================== INTERACTIONS ====================
+function filterTopics(cat) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  document.querySelector(`.filter-chip[data-cat="${cat}"]`).classList.add('active');
+
+  document.querySelectorAll('.topic-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.classList.remove('hidden-filter');
+    } else {
+      card.classList.add('hidden-filter');
+    }
+  });
+}
+
+function openModal(t) {
+  const catColors = { tech: 'var(--cat-tech)', biz: 'var(--cat-biz)', lead: 'var(--cat-lead)', phil: 'var(--cat-phil)' };
+  const catBgs = { tech: 'rgba(0,200,255,0.1)', biz: 'rgba(118,185,0,0.1)', lead: 'rgba(255,170,0,0.1)', phil: 'rgba(204,102,255,0.1)' };
+
+  const ytSeconds = Math.floor(t.minutes * 60);
+  const ytUrl = `https://www.youtube.com/watch?v=vif8NQcjVf0&t=${ytSeconds}s`;
+
+  document.getElementById('modalContent').innerHTML = `
+    <span class="modal-cat" style="background:${catBgs[t.cat]}; color:${catColors[t.cat]}">${t.catLabel}</span>
+    <h2 class="modal-title">${t.title}</h2>
+    <div class="modal-time">⏱ ${t.time} · #${t.num}/20</div>
+    <div class="modal-body">${t.desc}</div>
+    <div class="modal-insights-title">◆ 关键洞察</div>
+    ${t.insights.map(i => `<div class="modal-insight"><span>${i}</span></div>`).join('')}
+    <div style="margin-top:24px;">
+      <a class="modal-yt-link" href="${ytUrl}" target="_blank">▶ 跳转到YouTube该时间点</a>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('modalOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// Intersection observer for nav
+const sections = ['overview', 'timeline', 'topics', 'stack', 'insights'];
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      document.querySelectorAll('.nav-btn').forEach((b, i) => {
+        b.classList.toggle('active', sections[i] === id);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+// ==================== INIT ====================
+renderTimeline();
+renderTopics();
+renderInfraMap();
+renderInsights();
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+
+// Animate timeline fill on scroll
+const timelineSection = document.getElementById('timeline');
+const timelineFill = document.getElementById('timelineFill');
+
+window.addEventListener('scroll', () => {
+  const rect = timelineSection.getBoundingClientRect();
+  const vh = window.innerHeight;
+  if (rect.top < vh && rect.bottom > 0) {
+    const progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh + rect.height)));
+    timelineFill.style.width = (progress * 100) + '%';
+  }
+});
+</script>
+</body>
+</html>
