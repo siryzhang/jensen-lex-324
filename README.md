@@ -1,4 +1,5 @@
-# Jensen Huang × Lex Fridman Podcast #494 — Interactive Deep Dive
+# Jensen Huang × Lex Fridman Podcast #494 
+[🔗Interactive Demo](https://siryzhang.github.io/jensen-lex-324/)
 
 ![Cover](cover.png)
 
