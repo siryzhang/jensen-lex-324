@@ -1,6 +1,7 @@
 # Jensen Huang × Lex Fridman Podcast #494 — Interactive Deep Dive
 
-![Cover](cover.png)
+<img width="2000" height="942" alt="image" src="https://github.com/user-attachments/assets/db438b4b-c21b-47ff-9368-8399318666d5" />
+
 
 > **Jensen Huang: NVIDIA CEO — The $4 Trillion Company & the AI Revolution**
 > 
@@ -22,16 +23,6 @@ An interactive web page that deconstructs the full 2-hour-23-minute conversation
 ├── cover.png       # Cover image
 └── README.md
 ```
-
-## 🚀 Usage
-
-Just open `index.html` in any modern browser. No build step, no server, no dependencies.
-
-Or deploy to GitHub Pages:
-
-1. Push this repo to GitHub
-2. Go to **Settings → Pages → Source → Deploy from a branch → `main` / `root`**
-3. Your page will be live at `https://<username>.github.io/<repo-name>/`
 
 ## 🗂 Topics Covered
 
