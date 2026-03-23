@@ -1,6 +1,6 @@
 # Jensen Huang × Lex Fridman Podcast #494 — Interactive Deep Dive
 
-<img width="2000" height="942" alt="image" src="https://github.com/user-attachments/assets/db438b4b-c21b-47ff-9368-8399318666d5" />
+![Cover](cover.png)
 
 
 > **Jensen Huang: NVIDIA CEO — The $4 Trillion Company & the AI Revolution**
